@@ -3,6 +3,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt" // Added to resolve undefined: fmt
 	"io"
 	"log"
 	"net"
@@ -434,7 +435,7 @@ func (sp *SuperPeer) handleInvalidation(msg InvalidationMessage) {
 	defer sp.mu.Unlock()
 
 	fileName := msg.FileName
-	newVersion := msg.VersionNumber
+	// newVersion := msg.VersionNumber // Removed to resolve 'declared and not used' error
 
 	// Check if the file exists in the FileIndex
 	leafNodeIDs, exists := sp.FileIndex[fileName]

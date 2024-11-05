@@ -32,12 +32,12 @@ type LeafNode struct {
 
 // CachedFile contains metadata about a cached file
 type CachedFile struct {
-	FileName       string           `json:"file_name"`
-	VersionNumber  int              `json:"version_number"`
-	OriginServerID string           `json:"origin_server_id"`
-	Consistency    ConsistencyState `json:"consistency_state"`
-	LastModified   time.Time        `json:"last_modified_time"`
-	TTR            time.Duration    `json:"ttr"` // For pull-based approach later
+	FileName        string           `json:"file_name"`
+	VersionNumber   int              `json:"version_number"`
+	OriginServerID  string           `json:"origin_server_id"`
+	Consistency     ConsistencyState `json:"consistency_state"`
+	LastModified    time.Time        `json:"last_modified_time"`
+	TTR             time.Duration    `json:"ttr"` // For pull-based approach later
 }
 
 // ConsistencyState represents the state of a cached file
@@ -226,7 +226,6 @@ func (ln *LeafNode) handleSuperPeerConnection(conn net.Conn) {
 	}
 }
 
-/*--------- start change ----------*/
 // handleInvalidation processes an INVALIDATION message from the super-peer
 func (ln *LeafNode) handleInvalidation(msg InvalidationMessage) {
 	// Check if the file exists in the cachedFiles map
@@ -258,7 +257,6 @@ func (ln *LeafNode) handleInvalidation(msg InvalidationMessage) {
 	// Inform the user about the invalidation
 	fmt.Printf("\n*** ALERT: The file '%s' has been invalidated and removed from your cache. ***\n", msg.FileName)
 }
-/*--------- end change ----------*/
 
 // startUserInterface handles user inputs and download prompts
 func (ln *LeafNode) startUserInterface() {
@@ -433,49 +431,17 @@ func (ln *LeafNode) downloadFile(msg QueryHitMessage) {
 
 	// Update the cachedFiles map with metadata
 	cachedFile := &CachedFile{
-		FileName:       msg.FileName,
-		VersionNumber:  1, // Initialize to version 1 or fetch from origin server if available
-		OriginServerID: msg.RespondingID,
-		Consistency:    ConsistencyValid,
-		LastModified:   time.Now(),
-		TTR:            5 * time.Minute, // Example TTR value; adjust as needed
+		FileName:        msg.FileName,
+		VersionNumber:   1, // Initialize to version 1 or fetch from origin server if available
+		OriginServerID:  msg.RespondingID,
+		Consistency:     ConsistencyValid,
+		LastModified:    time.Now(),
+		TTR:             5 * time.Minute, // Example TTR value; adjust as needed
 	}
 
 	ln.mu.Lock()
 	ln.cachedFiles[msg.FileName] = cachedFile
 	ln.mu.Unlock()
-}
-
-// handleInvalidation processes an INVALIDATION message from the super-peer
-func (ln *LeafNode) handleInvalidation(msg InvalidationMessage) {
-	// Check if the file exists in the cachedFiles map
-	ln.mu.Lock()
-	cachedFile, exists := ln.cachedFiles[msg.FileName]
-	if !exists {
-		ln.mu.Unlock()
-		log.Printf("Leaf-Node %s: Received INVALIDATION for unknown file '%s'. Ignoring.", ln.Config.ID, msg.FileName)
-		return
-	}
-
-	// Update the Consistency state to INVALID
-	cachedFile.Consistency = ConsistencyInvalid
-	ln.mu.Unlock()
-
-	// Optionally, remove the file from the local cache
-	sharedDir := "./shared_files/" + ln.Config.ID
-	filePath := filepath.Join(sharedDir, msg.FileName)
-
-	// Remove the file to invalidate the cached copy
-	err := os.Remove(filePath)
-	if err != nil {
-		log.Printf("Leaf-Node %s: Failed to remove file '%s': %v", ln.Config.ID, msg.FileName, err)
-		return
-	}
-
-	log.Printf("Leaf-Node %s: Invalidated and removed file '%s' due to INVALIDATION from Super-Peer %s", ln.Config.ID, msg.FileName, msg.OriginServerID)
-
-	// Inform the user about the invalidation
-	fmt.Printf("\n*** ALERT: The file '%s' has been invalidated and removed from your cache. ***\n", msg.FileName)
 }
 
 // getFileSize returns the size of the file at the given path
