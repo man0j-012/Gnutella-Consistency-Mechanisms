@@ -1,0 +1,18 @@
+{
+  "id": "LN1",
+  "address": "127.0.0.1",
+  "port": 9000,
+  "super_peer": "SP1",
+  "origin_files": [
+    "file1.txt",
+    "file2.txt",
+    "file3.txt",
+    "file4.txt",
+    "file5.txt",
+    "file6.txt",
+    "file7.txt",
+    "file8.txt",
+    "file9.txt",
+    "file10.txt"
+  ]
+}

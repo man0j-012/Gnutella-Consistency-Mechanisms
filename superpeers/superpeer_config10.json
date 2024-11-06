@@ -1,0 +1,7 @@
+{
+  "id": "SP10",
+  "address": "127.0.0.1",
+  "port": 8009,
+  "neighbors": ["SP1", "SP2", "SP3", "SP4", "SP5", "SP6", "SP7", "SP8", "SP9"],
+  "leaf_nodes": []
+}
