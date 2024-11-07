@@ -1,7 +1,9 @@
 {
   "id": "SP3",
   "address": "127.0.0.1",
-  "port": 8002,
-  "neighbors": ["SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "SP8", "SP9", "SP10"],
-  "leaf_nodes": ["LN5", "LN6"]
+  "port": 8003,
+  "neighbors": ["SP2", "SP4"],
+  "leaf_nodes": ["LN4"],
+  "enable_push": true,
+  "enable_pull": false
 }

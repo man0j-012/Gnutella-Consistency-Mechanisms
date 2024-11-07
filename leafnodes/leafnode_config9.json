@@ -1,18 +1,9 @@
 {
   "id": "LN9",
   "address": "127.0.0.1",
-  "port": 9008,
-  "super_peer": "SP6",
-  "origin_files": [
-    "file40.txt",
-    "file41.txt",
-    "file42.txt",
-    "file43.txt",
-    "file44.txt",
-    "file45.txt",
-    "file46.txt",
-    "file47.txt",
-    "file48.txt",
-    "file49.txt"
-  ]
+  "port": 9009,
+  "super_peer": "SP8",
+  "enable_push": true,
+  "enable_pull": false,
+  "TTR": 60
 }
