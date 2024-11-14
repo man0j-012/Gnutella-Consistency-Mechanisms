@@ -1,6 +1,4 @@
-# CS485 Programming Assignment 3 (PA3)
-
-## Maintaining File Consistency in Hierarchical Gnutella-Style P2P System
+# Maintaining File Consistency in Hierarchical Gnutella-Style P2P System
 
 ### Table of Contents
 1. [Project Overview](#project-overview)
